@@ -1,0 +1,20 @@
+#!/usr/bin/env node
+
+var fs = require('fs');
+var commander = require('commander');
+
+commander.version(JSON.parse(fs.readFileSync(__dirname + '/../package.json')).version);
+commander.name = 'feather2lothar';
+commander.usage('source target');
+commander.parse(process.argv);
+
+var args = commander.args;
+
+if(args.length < 2){
+    throw new Error('arguments error!');
+}
+
+var path = require('path');
+var root = process.cwd(), from = path.join(root, args[0]), to = path.join(root, args[1]);
+
+require('../revert.js')(from, to);

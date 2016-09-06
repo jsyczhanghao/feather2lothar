@@ -53,3 +53,8 @@ feather2lothar feather-demo ./lothar-demo
 ```
 
 ### 使用lothar
+
+```sh
+lothar release -r lothar-demo/common
+lothar release -r lothar-demo/main
+```

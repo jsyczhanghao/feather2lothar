@@ -1,6 +1,6 @@
 {
   "name": "feather2lothar",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "feather1.x 转 lothar",
   "bin": "bin/revert",
   "main": "revert.js",

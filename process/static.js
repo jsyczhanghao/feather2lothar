@@ -1,5 +1,5 @@
 function replaceUrl(content, file, files){
-    return content.replace(/\/?(static\/|component\/|(['"]):\/?)(?:([^\/'"]+)\/?)?([^'"\r\n\)\?]*)/g, function(all, type, quote, namespace, s){
+    return content.replace(/\/?(static\/|component\/|(['"])([\w-_]+)?:\/?)(?:([^\/'"]+)\/?)?([^'"\r\n\)\?]*)/g, function(all, type, quote, m, namespace, s){
         var ext = all.split('.').pop();
 
         if(IMAGE_FILE_EXTS.indexOf(ext) > -1){
@@ -16,21 +16,23 @@ function replaceUrl(content, file, files){
 
         var type;
 
-        if(type.indexOf(':') == 1){
+        if(type.indexOf(':') > -1){
             s = (namespace || '') + (s ? '/' + s : s);
 
-            if(file.modulename == 'common'){
+            if(!m){
+                m = 'common';
+            }
+
+            if(file.modulename == m){
                 return quote + s;
             }else{
-                return quote + 'common:' + s;
+                return quote + m + ':' + s;
             }
         }else if(type.indexOf('component') == 0){ 
             type = 'widget';
         }else{
             type = 'static';
         }
-
-
 
         if(namespace == file.modulename && file.modulename != 'main'){
             s =  '/' + type + '/' + s;
@@ -40,7 +42,7 @@ function replaceUrl(content, file, files){
             s = '/' + type + '/' + namespace + '/' + s;
         }
 
-        return s.replace(/\/?static\/mod\//, '');
+        return s.replace(/\/?static\/mod\//, '').replace(/\/+$/, '');
     });
 }
 

@@ -23,7 +23,7 @@ module.exports = function(files){
         var content = file.getContent();
 
         if(file.isHtmlLike){
-            content = content.replace(/\$this->component\(\s*['"]([^'"]+)['"]([^;]+);|<component(?: [\s\S]*?name=['"]([^'"]+)['"])?[^>]*>(?:([\s\S]*?)<\/component>)?/g, function(all, id, content, ID){
+            content = content.replace(/\$this->component\(\s*['"]([^'"]+)['"]([^;]*?)(?:;|(?=\?>))|<component(?: [\s\S]*?name=['"]([^'"]+)['"])?[^>]*>(?:([\s\S]*?)<\/component>)?/g, function(all, id, content, ID){
                 id = id || ID;
                 id = getWidgetPath(id);
 
